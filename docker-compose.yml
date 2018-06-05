@@ -1,0 +1,19 @@
+version: '2'
+services:
+  fluentd:
+    build: ./fluentd
+    image: fluent/fluentd:latest
+    container_name: fluentd
+    ports:
+      - "24224:24224"
+      - "5140:5140"
+    environment:
+      - 'FLUENTD_CONF=fluentd.conf'
+      - 'AWS_REGION=ap-northeast-1'
+#      - 'AWS_ACCESS_KEY_ID='
+#      - 'AWS_SECRET_ACCESS_KEY='
+      - 'LOG_GROUP_NAME=fluentd_test'
+    volumes:
+      - ./strage:/fluentd/log
+      - ./fluentd/etc:/fluentd/etc/
+      - ./fluentd/plugins:/fluentd/plugins
